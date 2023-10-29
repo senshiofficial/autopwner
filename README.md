@@ -14,6 +14,14 @@ autopwner is a tool made for automated hacking. Currently you can only use autom
 - [ ] privesc in sh
 - [ ] windows Privilege Escalations
 
+## Download
+```
+git clone https://github.com/senshiofficial/autopwner.git
+cd autopwner
+pip install -r requirements.txt
+python3 main.py
+```
+
 ## Usage
 ```
 python3 main.py (-o/--option int, -s/--su, -f/--file)
