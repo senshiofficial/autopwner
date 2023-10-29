@@ -10,9 +10,9 @@ autopwner is a tool made for automated hacking. Currently you can only use autom
 > This script is still on a early phase and bugs are expected
 
 ## Upcoming Updates
-- [] privesc for temp use
-- [] privesc in sh
-- [] windows Privilege Escalations
+- [ ] privesc for temp use
+- [ ] privesc in sh
+- [ ] windows Privilege Escalations
 
 ## Usage
 ```
