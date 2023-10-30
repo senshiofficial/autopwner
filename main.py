@@ -1,17 +1,18 @@
 from colorama import Fore
 import time
 import argparse
-import privesc
+import pr1v3sc_sn1p3r as privesc
 #import ???     Will be comming soon...
 #import ???     Will be comming soon...
-file_esc = False
+file_esc = None
+cve = True
 def intro(text, delay=0.003):
     print(Fore.RED, end='')
     for char in text:
         print(char, end='')
         time.sleep(delay)
     print(Fore.RESET, end="")
-modes = "\n1 - Check for PrivEscs (pr1v3sc sn1p3r)\n2 - Comming soon...\n3 - Comming soon...\n4 - Comming Soon....\n$ "
+modes = "\n1 - Check for PrivEscs (pr1v3sc_sn1p3r)\n2 - Comming Soon...\n3 - Comming Soon...\n4 - Comming Soon...\n$ "
 def main():
     global mode
     intro(""" ▄▄▄       █    ██ ▄▄▄█████▓ ▒█████   ██▓███   █     █░███▄    █ ▓█████  ██▀███  
@@ -29,7 +30,8 @@ def main():
         mode = int(input(modes))
     match int(mode):
         case 1:
-            privesc.main(file_esc)
+            privesc.main(file_esc, cve)
+
         case 2:
             print("Comming Soon...")
             print("Its an Automated nma-")
@@ -47,6 +49,7 @@ if __name__ == "__main__":
     parser.add_argument("-o", "--option", help="option", required=False)
     parser.add_argument("-s", "--su", help="su Privilege Escalation", action="store_true", required=False)
     parser.add_argument("-f", "--file", help="file Privilege Escalation", action="store_true", required=False)
+    parser.add_argument("-nc", "--no-cve", help="dont use CVEs for Privescs", action="store_true", required=False)
     args = parser.parse_args()
     if args.option:
         try:
@@ -57,5 +60,6 @@ if __name__ == "__main__":
         file_esc = False
     if args.file:
         file_esc = True
-    
+    if args.no_cve:
+        cve = False
     main()
