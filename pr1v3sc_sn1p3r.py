@@ -1,14 +1,14 @@
 import subprocess
-from colorama import Fore
 import os
 import json
-from main import intro
+import intro
 import platform
 import cve_2021_3560 as cve_3560
 import cve_2021_4034 as pwkit
 import cve_2022_0847 as dirtyPipe
+import threading
 sys = platform.system()
-
+output = None
 def cmdPrint(cmd):
     print(Fore.RED, f"[+] Found {cmd}", Fore.RESET)
 
@@ -16,7 +16,7 @@ def tryPrint(cmd):
     print(Fore.RED, f"Trying {cmd}", Fore.RESET)
 
 def uknownOS():
-    global sys
+    global sys, output
     lin = 0
     win = 0
     lin_cmds = ["ls", "clear", "ifconfig", "grep", "apt",]
@@ -30,6 +30,8 @@ def uknownOS():
         if test.returncode == 0:
             win +=1
     if win == lin:
+        output = subprocess.run(['ls', '/bin'], stdout=subprocess.PIPE, text=True)
+        output = (output).stdout.split('\n')
         sys = "Linux"
         print("{} can run Linux and Windows commands").format(sys)
     elif win > lin:
@@ -41,11 +43,27 @@ def uknownOS():
 with open("privesc.json") as f:
     privescs = json.load(f)
 
-def main(file_esc, cve):
-    intro(""" \n ██▓███   ██▀███   ██▓ ██▒   █▓▓█████   ██████  ▄████▄       ██████  ███▄    █  ██▓ ██▓███  ▓█████  ██▀███  \n▓██░  ██▒▓██ ▒ ██▒▓██▒▓██░   █▒▓█   ▀ ▒██    ▒ ▒██▀ ▀█     ▒██    ▒  ██ ▀█   █ ▓██▒▓██░  ██▒▓█   ▀ ▓██ ▒ ██▒\n▓██░ ██▓▒▓██ ░▄█ ▒▒██▒ ▓██  █▒░▒███   ░ ▓██▄   ▒▓█    ▄    ░ ▓██▄   ▓██  ▀█ ██▒▒██▒▓██░ ██▓▒▒███   ▓██ ░▄█ ▒\n▒██▄█▓▒ ▒▒██▀▀█▄  ░██░  ▒██ █░░▒▓█  ▄   ▒   ██▒▒▓▓▄ ▄██▒     ▒   ██▒▓██▒  ▐▌██▒░██░▒██▄█▓▒ ▒▒▓█  ▄ ▒██▀▀█▄  \n▒██▒ ░  ░░██▓ ▒██▒░██░   ▒▀█░  ░▒████▒▒██████▒▒▒ ▓███▀ ░   ▒██████▒▒▒██░   ▓██░░██░▒██▒ ░  ░░▒████▒░██▓ ▒██▒\n▒▓▒░ ░  ░░ ▒▓ ░▒▓░░▓     ░ ▐░  ░░ ▒░ ░▒ ▒▓▒ ▒ ░░ ░▒ ▒  ░   ▒ ▒▓▒ ▒ ░░ ▒░   ▒ ▒ ░▓  ▒▓▒░ ░  ░░░ ▒░ ░░ ▒▓ ░▒▓░\n░▒ ░       ░▒ ░ ▒░ ▒ ░   ░ ░░   ░ ░  ░░ ░▒  ░ ░  ░  ▒      ░ ░▒  ░ ░░ ░░   ░ ▒░ ▒ ░░▒ ░      ░ ░  ░  ░▒ ░ ▒░\n░░         ░░   ░  ▒ ░     ░░     ░   ░  ░  ░  ░           ░  ░  ░     ░   ░ ░  ▒ ░░░          ░     ░░   ░ \n            ░      ░        ░     ░  ░      ░  ░ ░               ░           ░  ░              ░  ░   ░     \n                           ░                   ░                                                            \n""")
-    output = subprocess.run(['ls', '/bin'], stdout=subprocess.PIPE, text=True)
-    output = (output).stdout.split('\n')
+def main(args):
+    global output
+    cve = None
+    file_esc = None
+    if args.su:
+        file_esc = False
+    if args.file:
+        file_esc = True
+    if args.no_cve:
+        cve = False
+    
+    intro.intro(" \n ██▓███   ██▀███   ██▓ ██▒   █▓▓█████   ██████  ▄████▄       ██████  ███▄    █  ██▓ ██▓███  ▓█████  ██▀███  \n▓██░  ██▒▓██ ▒ ██▒▓██▒▓██░   █▒▓█   ▀ ▒██    ▒ ▒██▀ ▀█     ▒██    ▒  ██ ▀█   █ ▓██▒▓██░  ██▒▓█   ▀ ▓██ ▒ ██▒\n▓██░ ██▓▒▓██ ░▄█ ▒▒██▒ ▓██  █▒░▒███   ░ ▓██▄   ▒▓█    ▄    ░ ▓██▄   ▓██  ▀█ ██▒▒██▒▓██░ ██▓▒▒███   ▓██ ░▄█ ▒\n▒██▄█▓▒ ▒▒██▀▀█▄  ░██░  ▒██ █░░▒▓█  ▄   ▒   ██▒▒▓▓▄ ▄██▒     ▒   ██▒▓██▒  ▐▌██▒░██░▒██▄█▓▒ ▒▒▓█  ▄ ▒██▀▀█▄  \n▒██▒ ░  ░░██▓ ▒██▒░██░   ▒▀█░  ░▒████▒▒██████▒▒▒ ▓███▀ ░   ▒██████▒▒▒██░   ▓██░░██░▒██▒ ░  ░░▒████▒░██▓ ▒██▒\n▒▓▒░ ░  ░░ ▒▓ ░▒▓░░▓     ░ ▐░  ░░ ▒░ ░▒ ▒▓▒ ▒ ░░ ░▒ ▒  ░   ▒ ▒▓▒ ▒ ░░ ▒░   ▒ ▒ ░▓  ▒▓▒░ ░  ░░░ ▒░ ░░ ▒▓ ░▒▓░\n░▒ ░       ░▒ ░ ▒░ ▒ ░   ░ ░░   ░ ░  ░░ ░▒  ░ ░  ░  ▒      ░ ░▒  ░ ░░ ░░   ░ ▒░ ▒ ░░▒ ░      ░ ░  ░  ░▒ ░ ▒░\n░░         ░░   ░  ▒ ░     ░░     ░   ░  ░  ░  ░           ░  ░  ░     ░   ░ ░  ▒ ░░░          ░     ░░   ░ \n            ░      ░        ░     ░  ░      ░  ░ ░               ░           ░  ░              ░  ░   ░     \n                           ░                   ░                                                            \n")
+    if file_esc == True:
+        mode = 2
+    elif file_esc == False:
+        mode = 1
+    else:
+        mode = int(input("\n1 - check for sudo PrivEsc\n2 - Check for file PrivEsc\n$ "))
     if sys == "Linux":
+        output = subprocess.run(['ls', '/bin'], stdout=subprocess.PIPE, text=True)
+        output = (output).stdout.split('\n')
         cmdPrint("Linux")
     elif sys == "Windows":
         cmdPrint("Windows")
@@ -54,20 +72,13 @@ def main(file_esc, cve):
         print("Sadly i dont have any exploits for {}, please post your current system at github \nhttps://github.com/senshiofficial/autopwner/issues").format(sys)
         print("Trying to figure out if its Windows or Linux based")
         uknownOS()
-    if file_esc == True:
-        mode = 2
-    elif file_esc == False:
-        mode = 1
-    else:
-        mode = int(input("\n1 - check for sudo PrivEsc\n2 - Check for file PrivEsc\n$ "))
-    if cve:
-        CVEcheck()
     if mode == 1:
         checkPrivEsc(output)
     elif mode == 2:
         checkFileAccess(output)
     if cve:
-        CVEcheck()
+        cve_check = threading.Thread(target=CVEcheck)
+        cve_check.start()
 
 def ask_another():
     answer = input("do you want to try another? [y/n]> ")
