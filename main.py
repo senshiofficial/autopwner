@@ -3,7 +3,7 @@ import time
 import argparse
 import intro
 import pr1v3sc_sn1p3r as privesc
-import nmap_sn1p3r
+import p0rt_sn1p3r
 #import ???     Will be comming soon...
 file_esc = None
 cve = True
