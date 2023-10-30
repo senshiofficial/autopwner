@@ -56,5 +56,4 @@ def checkFileAccess(output):
         if cmd in privescs["file"]:
             cmdPrint(cmd)
             cmds[cmd] = privescs["file"][cmd]
-    print(cmds)
     runCmd(cmds)
