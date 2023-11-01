@@ -7,6 +7,7 @@ import cve_2021_3560 as cve_3560
 import cve_2021_4034 as pwkit
 import cve_2022_0847 as dirtyPipe
 import threading
+from colorama import Fore
 sys = platform.system()
 output = None
 def cmdPrint(cmd):
