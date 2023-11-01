@@ -19,7 +19,7 @@ def main():
             privesc.main(args)
 
         case 2:
-            nmap_sn1p3r.main(args)
+            p0rt_sn1p3r.main(args)
 
         case 3:
             print("Comming Soon...")
