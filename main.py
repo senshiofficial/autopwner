@@ -1,16 +1,15 @@
 from colorama import Fore
-import time
 import argparse
 import intro
 import pr1v3sc_sn1p3r as privesc
 import p0rt_sn1p3r
-#import ???     Will be comming soon...
+import p4g3_sn1p3r
 file_esc = None
 cve = True
-modes = "\n1 - Check for PrivEscs (pr1v3sc_sn1p3r)\n2 - Comming Soon...\n3 - Comming Soon...\n4 - Comming Soon...\n$ "
+modes = "\n1 - Check for PrivEscs (pr1v3sc_sn1p3r)\n2 - Check open Ports (p0rt_sn1p3r)\n3 - Scrape a Website (r3q_sn1p3r)\n4 - Comming Soon...\n$ "
 def main():
     global mode
-    intro.intro("\n ▄▄▄       █    ██ ▄▄▄█████▓ ▒█████   ██▓███   █     █░███▄    █ ▓█████  ██▀███  \n▒████▄     ██  ▓██▒▓  ██▒ ▓▒▒██▒  ██▒▓██░  ██▒▓█░ █ ░█░██ ▀█   █ ▓█   ▀ ▓██ ▒ ██▒\n▒██  ▀█▄  ▓██  ▒██░▒ ▓██░ ▒░▒██░  ██▒▓██░ ██▓▒▒█░ █ ░█▓██  ▀█ ██▒▒███   ▓██ ░▄█ ▒\n░██▄▄▄▄██ ▓▓█  ░██░░ ▓██▓ ░ ▒██   ██░▒██▄█▓▒ ▒░█░ █ ░█▓██▒  ▐▌██▒▒▓█  ▄ ▒██▀▀█▄  \n ▓█   ▓██▒▒▒█████▓   ▒██▒ ░ ░ ████▓▒░▒██▒ ░  ░░░██▒██▓▒██░   ▓██░░▒████▒░██▓ ▒██▒\n ▒▒   ▓▒█░░▒▓▒ ▒ ▒   ▒ ░░   ░ ▒░▒░▒░ ▒▓▒░ ░  ░░ ▓░▒ ▒ ░ ▒░   ▒ ▒ ░░ ▒░ ░░ ▒▓ ░▒▓░\n  ▒   ▒▒ ░░░▒░ ░ ░     ░      ░ ▒ ▒░ ░▒ ░       ▒ ░ ░ ░ ░░   ░ ▒░ ░ ░  ░  ░▒ ░ ▒░\n  ░   ▒    ░░░ ░ ░   ░      ░ ░ ░ ▒  ░░         ░   ░    ░   ░ ░    ░     ░░   ░ \n      ░  ░   ░                  ░ ░               ░            ░    ░  ░   ░     \nmade by Senshi")
+    intro.intro(args,"\n ▄▄▄       █    ██ ▄▄▄█████▓ ▒█████   ██▓███   █     █░███▄    █ ▓█████  ██▀███  \n▒████▄     ██  ▓██▒▓  ██▒ ▓▒▒██▒  ██▒▓██░  ██▒▓█░ █ ░█░██ ▀█   █ ▓█   ▀ ▓██ ▒ ██▒\n▒██  ▀█▄  ▓██  ▒██░▒ ▓██░ ▒░▒██░  ██▒▓██░ ██▓▒▒█░ █ ░█▓██  ▀█ ██▒▒███   ▓██ ░▄█ ▒\n░██▄▄▄▄██ ▓▓█  ░██░░ ▓██▓ ░ ▒██   ██░▒██▄█▓▒ ▒░█░ █ ░█▓██▒  ▐▌██▒▒▓█  ▄ ▒██▀▀█▄  \n ▓█   ▓██▒▒▒█████▓   ▒██▒ ░ ░ ████▓▒░▒██▒ ░  ░░░██▒██▓▒██░   ▓██░░▒████▒░██▓ ▒██▒\n ▒▒   ▓▒█░░▒▓▒ ▒ ▒   ▒ ░░   ░ ▒░▒░▒░ ▒▓▒░ ░  ░░ ▓░▒ ▒ ░ ▒░   ▒ ▒ ░░ ▒░ ░░ ▒▓ ░▒▓░\n  ▒   ▒▒ ░░░▒░ ░ ░     ░      ░ ▒ ▒░ ░▒ ░       ▒ ░ ░ ░ ░░   ░ ▒░ ░ ░  ░  ░▒ ░ ▒░\n  ░   ▒    ░░░ ░ ░   ░      ░ ░ ░ ▒  ░░         ░   ░    ░   ░ ░    ░     ░░   ░ \n      ░  ░   ░                  ░ ░               ░            ░    ░  ░   ░     \nmade by Senshi")
     print("\n\nover 200 - sudo PrivEscs\nover 100 - file PrivEscs")
     if mode == 0:
         mode = int(input(modes))
@@ -22,8 +21,8 @@ def main():
             p0rt_sn1p3r.main(args)
 
         case 3:
-            print("Comming Soon...")
-            print("Its an Automated SQL-")
+            p4g3_sn1p3r.main(args)
+            pass
         case 4:
             print("Comming Soon...")
             print("Its an Automated web-")
@@ -44,6 +43,8 @@ if __name__ == "__main__":
     parser.add_argument("-nvp", "--no-vpn-prot", help="Use if your VPN doesnt blocks port scanners", action="store_true",required=False)
     parser.add_argument("-vp", "--vpn-prot", help="Use if your VPN blocks port scanners", action="store_true",required=False)
     parser.add_argument("-t", "--target", help="IP of target you want to port scan",required=False)
+    parser.add_argument("-c", "--color", help="output color",required=False, type=int)
+    parser.add_argument("-st", "--scrape_thread", help="How many Threads for scraping do you wanna use", required=False, type=int)
     args = parser.parse_args()
     
     if args.option:
