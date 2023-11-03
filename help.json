@@ -1,0 +1,48 @@
+{
+    "nmap": {
+        "command_line": "nmap -oX - -p 8000 127.0.0.1",
+        "scaninfo": {
+            "tcp": {
+                "method": "connect",
+                "services": "8000"
+            }
+        },
+        "scanstats": {
+            "timestr": "Wed Oct 18 06: 45: 20 2023",
+            "elapsed": "0.04",
+            "uphosts": "1",
+            "downhosts": "0",
+            "totalhosts": "1"
+        }
+    },
+    "scan": {
+        "127.0.0.1": {
+            "hostnames": [
+                {
+                    "name": "localhost",
+                    "type": "PTR"
+                }
+            ],
+            "addresses": {
+                "ipv4": "127.0.0.1"
+            },
+            "vendor": {},
+            "status": {
+                "state": "up",
+                "reason": "syn-ack"
+            },
+            "tcp": {
+                "8000": {
+                    "state": "closed",
+                    "reason": "conn-refused",
+                    "name": "http-alt",
+                    "product": "",
+                    "version": "",
+                    "extrainfo": "",
+                    "conf": "3",
+                    "cpe": ""
+                }
+            }
+        }
+    }
+}

@@ -1,0 +1,19 @@
+{
+    "nmap": {
+        "command_line": "none",
+        "scaninfo": {
+            "error": [
+                "Error #485: Your port specifications are illegal.  Example of proper form: '-100,200-1024,T: 3000-4000,U: 60000-'\nQUITTING!\n",
+                "Error #485: Your port specifications are illegal.  Example of proper form: '-100,200-1024,T: 3000-4000,U: 60000-'\nQUITTING!\n"
+            ]
+        },
+        "scanstats": {
+            "timestr": "Tue Oct 31 07:19:12 2023",
+            "elapsed": "0.03",
+            "uphosts": "0",
+            "downhosts": "0",
+            "totalhosts": "0"
+        }
+    },
+    "scan": {}
+}

