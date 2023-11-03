@@ -1,2 +1,2 @@
-colorama
 argparse
+bs4
