@@ -25,24 +25,38 @@ python3 main.py
 python3 main.py [OPTION]
   -o, --option          Select option  
   
-  Privilege Escalation  (1)
-	-s, --su            Select only root Privilege Escalations
-	-f, --file          Select only file Privilege Escalations
-	-nc, --no-cve       Disable CVE exploiting
+  Privilege Escalation    (1)
+	-s, --su              Select only root Privilege Escalations
+	-f, --file            Select only file Privilege Escalations
+	-nc, --no-cve         Disable CVE exploiting
 
-  Port Scanner          (2)
-	-t, --target        Select a Target IP
-	-app, --app-ports   Scan Common Application ports
-	-wp, --web-ports    Scan common webapp ports
-	-bp, --both-ports   Scan both webapp and Application ports
-	-p, --port          Scan specified port (1-10,11,12.....)
-	-alp, --all-ports   Scan all ports (1-65555)
-	-nvp, --no-vpn-prot Choose if your VPN doesnt block Port scanners
-	-vp, --vpn-prot     Choose if your VPN does block Port scanners
+  Port Scanner            (2)
+	-t, --target          Select a Target IP
+	-app, --app-ports     Scan Common Application ports
+	-wp, --web-ports      Scan common webapp ports
+	-bp, --both-ports     Scan both webapp and Application ports
+	-p, --port            Scan specified port (1-10,11,12.....)
+	-alp, --all-ports     Scan all ports (1-65555)
+	-nvp, --no-vpn-prot   Choose if your VPN doesnt block Port scanners
+	-vp, --vpn-prot       Choose if your VPN does block Port scanners
 
+  Web Scraper             (3)
+	-t, --target          Select a Target IP
+    -st, --scrape-thread  Select the Scraping threads
+
+  General
+	-c, --color           Choose output color (ANSI)
 ```
 
+
+## Todo
+-  Found out why ![p4g3_sn1p3r](p4g3_sn1p3r.py)`scrape_pages` doesnt work without `scrape_forms` and fix it
+
 ## Versions
+- #### 1.3.1 Alpha
+	- [+] Scrape Websites (Beta)
+	- [+] -c, --color to change intro's color (ANSI)
+	- [+] Colorama no more needed 
 - #### 1.2 Alpha
 	- [+] Port scanner (Beta)
 	- [+] better argument handling
@@ -58,3 +72,6 @@ python3 main.py [OPTION]
 ## Tested
 - #### Kali Linux Roling 2023.3
 	- [+] everythings working fine
+- #### Arch Linux (x86_64)
+	- [-] p0rt_sn1p3r doesnt work due `nmap.nmap.PortScannerError`
+	- [+] anything other works fine
