@@ -7,7 +7,7 @@ import pwd
 
 def runCmd(cmd):
 	try:
-		subprocess.run([cmd], stdout=subprocess.PIPE, stderr=subprocess.PIPE, text=True)
+		subprocess.run([cmd, "-h"], stdout=subprocess.PIPE, stderr=subprocess.PIPE, text=True)
 		return True
 	except FileNotFoundError:
 		return False
