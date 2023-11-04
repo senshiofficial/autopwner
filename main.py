@@ -25,7 +25,7 @@ def main():
             pass
         case 4:
             print("Comming Soon...")
-            print("Its an Automated web-")
+            print("Its an Automated SQ-")
         case _:
             print("no such option")
 if __name__ == "__main__":
