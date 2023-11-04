@@ -75,3 +75,5 @@ python3 main.py [OPTION]
 - #### Arch Linux (x86_64)
 	- [-] p0rt_sn1p3r doesnt work due `nmap.nmap.PortScannerError`
 	- [+] anything other works fine
+
+# My Bad i pushed the wrong Repo and saw it 1 day later
