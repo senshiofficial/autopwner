@@ -42,7 +42,7 @@ python3 main.py [OPTION]
 
   Web Scraper             (3)
 	-t, --target          Select a Target IP
-    -st, --scrape-thread  Select the Scraping threads
+        -st, --scrape-thread  Select the Scraping threads
 
   General
 	-c, --color           Choose output color (ANSI)
