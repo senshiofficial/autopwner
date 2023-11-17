@@ -4,10 +4,9 @@ import intro
 import pr1v3sc_sn1p3r as privesc
 import p0rt_sn1p3r
 import p4g3_sn1p3r
-# Had to edit something to push it
 file_esc = None
 cve = True
-modes = "\n1 - Check for PrivEscs (pr1v3sc_sn1p3r)\n2 - Check open Ports (p0rt_sn1p3r)\n3 - Scrape a Website (r3q_sn1p3r)\n4 - Comming Soon...\n$ "
+modes = "\n1 - Check for PrivEscs (pr1v3sc_sn1p3r)\n2 - Check open Ports (p0rt_sn1p3r)\n3 - Scrape a Website (p4g3_sn1p3r)\n4 - Comming Soon...\n$ "
 def main():
     global mode
     intro.intro(args,"\n ▄▄▄       █    ██ ▄▄▄█████▓ ▒█████   ██▓███   █     █░███▄    █ ▓█████  ██▀███  \n▒████▄     ██  ▓██▒▓  ██▒ ▓▒▒██▒  ██▒▓██░  ██▒▓█░ █ ░█░██ ▀█   █ ▓█   ▀ ▓██ ▒ ██▒\n▒██  ▀█▄  ▓██  ▒██░▒ ▓██░ ▒░▒██░  ██▒▓██░ ██▓▒▒█░ █ ░█▓██  ▀█ ██▒▒███   ▓██ ░▄█ ▒\n░██▄▄▄▄██ ▓▓█  ░██░░ ▓██▓ ░ ▒██   ██░▒██▄█▓▒ ▒░█░ █ ░█▓██▒  ▐▌██▒▒▓█  ▄ ▒██▀▀█▄  \n ▓█   ▓██▒▒▒█████▓   ▒██▒ ░ ░ ████▓▒░▒██▒ ░  ░░░██▒██▓▒██░   ▓██░░▒████▒░██▓ ▒██▒\n ▒▒   ▓▒█░░▒▓▒ ▒ ▒   ▒ ░░   ░ ▒░▒░▒░ ▒▓▒░ ░  ░░ ▓░▒ ▒ ░ ▒░   ▒ ▒ ░░ ▒░ ░░ ▒▓ ░▒▓░\n  ▒   ▒▒ ░░░▒░ ░ ░     ░      ░ ▒ ▒░ ░▒ ░       ▒ ░ ░ ░ ░░   ░ ▒░ ░ ░  ░  ░▒ ░ ▒░\n  ░   ▒    ░░░ ░ ░   ░      ░ ░ ░ ▒  ░░         ░   ░    ░   ░ ░    ░     ░░   ░ \n      ░  ░   ░                  ░ ░               ░            ░    ░  ░   ░     \nmade by Senshi")
@@ -23,7 +22,6 @@ def main():
 
         case 3:
             p4g3_sn1p3r.main(args)
-            pass
         case 4:
             print("Comming Soon...")
             print("Its an Automated SQ-")
@@ -45,7 +43,8 @@ if __name__ == "__main__":
     parser.add_argument("-vp", "--vpn-prot", help="Use if your VPN blocks port scanners", action="store_true",required=False)
     parser.add_argument("-t", "--target", help="IP of target you want to port scan",required=False)
     parser.add_argument("-c", "--color", help="output color",required=False, type=int)
-    parser.add_argument("-st", "--scrape_thread", help="How many Threads for scraping do you wanna use", required=False, type=int)
+    #parser.add_argument("-ad", "--allowed-domains", help="How many Threads for scraping do you wanna use", required=False) Currently Not working
+    parser.add_argument("-sn", "--spider-name", help="Change the Spiders Name", required=False)
     args = parser.parse_args()
     
     if args.option:
