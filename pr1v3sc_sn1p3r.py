@@ -6,7 +6,9 @@ import platform
 import cve_2021_3560 as cve_3560
 import cve_2021_4034 as pwkit
 import cve_2022_0847 as dirtyPipe
+import cve_2021_3493 as cve_3493
 import threading
+import time
 from colorama import Fore
 sys = platform.system()
 output = None
@@ -104,6 +106,10 @@ def CVEcheck():
         cmdPrint("cve-2021-3560")
         cve_3560.main()
     
+    if cve_3493.check():
+        cmdPrint("cve-2021-3493")
+        cve_3493.exploit()
+
     cmdPrint("Pwkit (CVE-2021-4034)")
     pwkit.main()
     
