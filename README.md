@@ -40,19 +40,18 @@ python3 main.py [OPTION]
 	-nvp, --no-vpn-prot   Choose if your VPN doesnt block Port scanners
 	-vp, --vpn-prot       Choose if your VPN does block Port scanners
 
-  Web Scraper             (3)
+  Web Spider             (3)
 	-t, --target          Select a Target IP
-        -st, --scrape-thread  Select the Scraping threads
+	-sn, --spider-name    Change the Spiders Name
 
   General
 	-c, --color           Choose output color (ANSI)
 ```
 
-
-## Todo
--  Found out why ![p4g3_sn1p3r](p4g3_sn1p3r.py)`scrape_pages` doesnt work without `scrape_forms` and fix it
-
 ## Versions
+- #### 1.3.2
+	- [+] using Scrapy for p4g3_sn1p3r
+	- [+]  new arguments
 - #### 1.3.1 Alpha
 	- [+] Scrape Websites (Beta)
 	- [+] -c, --color to change intro's color (ANSI)
@@ -72,8 +71,6 @@ python3 main.py [OPTION]
 ## Tested
 - #### Kali Linux Roling 2023.3
 	- [+] everythings working fine
-- #### Arch Linux (x86_64)
+- #### Arch Linux x86_64
 	- [-] p0rt_sn1p3r doesnt work due `nmap.nmap.PortScannerError`
 	- [+] anything other works fine
-
-# My Bad i pushed the wrong Repo and saw it 1 day later
