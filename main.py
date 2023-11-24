@@ -43,7 +43,7 @@ if __name__ == "__main__":
     parser.add_argument("-vp", "--vpn-prot", help="Use if your VPN blocks port scanners", action="store_true",required=False)
     parser.add_argument("-t", "--target", help="IP of target you want to port scan",required=False)
     parser.add_argument("-c", "--color", help="output color",required=False, type=int)
-    #parser.add_argument("-ad", "--allowed-domains", help="How many Threads for scraping do you wanna use", required=False) Currently Not working
+    #parser.add_argument("-ad", "--allowed-domains", help="allowed domains split with ',' doamin,domain", required=False) Currently Not working
     parser.add_argument("-sn", "--spider-name", help="Change the Spiders Name", required=False)
     args = parser.parse_args()
     
