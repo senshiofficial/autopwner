@@ -1,0 +1,81 @@
+:root {
+  --page-background: 277deg, 55%, 12%;
+}
+
+
+.BtnContainer {
+  position: fixed;
+  left: 0;
+  top: 50%;
+  transform: translateY(-50%);
+  z-index: 1;
+}
+.purpleBtn {
+  --text-base: 277deg, 55%, 40%;
+  --text-hover: 307deg, 72%, 86%;
+  --shadow-start: 52deg, 100%, 72%;
+  --shadow-end: 282deg, 90%, 50%;
+  --shadow-inner: 277deg, 90%, 62%;
+  all: unset;
+  color: hsla(var(--text-base), 1);
+  font: 700 1rem/1.2 Raleway, sans-serif;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  text-align: center;
+  max-width: 100%;
+  width: 8em;
+  background: inherit;
+  background-clip: padding-box;
+  border: 3px solid hsla(var(--text-base), 1);
+  border-radius: 1em;
+  cursor: pointer;
+  position: relative;
+  transition: 0.25s ease-out;
+}
+
+.purpleBtn::before,
+.purpleBtn::after {
+  content: "";
+  border-radius: inherit;
+  transition: inherit;
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+}
+
+.purpleBtn::before {
+  inset: -0.2em;
+  z-index: -1;
+  background: linear-gradient(
+    hsla(var(--shadow-start), 1),
+    hsla(var(--shadow-end), 1)
+  );
+  filter: blur(0.8em) saturate(1.2);
+  transform-origin: bottom;
+  transform: scaleY(0.5);
+  opacity: 0;
+}
+
+.purpleBtn::after {
+  box-shadow: inset 0 0 0 1px #fff, 0 0 0 3px rgba(255, 255, 255, 0.7),
+    1px 1px 0 3px #fff;
+  mix-blend-mode: overlay;
+  opacity: 0;
+}
+
+.purpleBtn:hover,
+.purpleBtn:focus {
+  color: hsla(var(--text-hover), 1);
+  border-color: transparent;
+  box-shadow: inset 0 1.2em 0 hsla(var(--shadow-inner), 0.1),
+    inset 0 0 1.2em hsla(var(--shadow-inner), 0.32),
+    0 1px 1px hsla(var(--shadow-inner), 0.32);
+}
+
+.purpleBtn:hover::before,
+.purpleBtn:hover::after,
+.purpleBtn:focus::before,
+.purpleBtn:focus::after {
+  transform: none;
+  opacity: 1;
+}
