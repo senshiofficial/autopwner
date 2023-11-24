@@ -3,15 +3,16 @@ import os
 import json
 import intro
 import platform
-import cve_2021_3560 as cve_3560
-import cve_2021_4034 as pwkit
-import cve_2022_0847 as dirtyPipe
-import cve_2021_3493 as cve_3493
+import CVE.cve_2021_3560 as cve_3560
+import CVE.cve_2021_4034 as pwkit
+import CVE.cve_2022_0847 as dirtyPipe
+import CVE.cve_2021_3493 as cve_3493
 import threading
 import time
 from colorama import Fore
 sys = platform.system()
 output = None
+
 def cmdPrint(cmd):
     print(Fore.RED, f"[+] Found {cmd}", Fore.RESET)
 
@@ -117,7 +118,6 @@ def CVEcheck():
     dirtyPipe.main()
 
 def checkPrivEsc(output):
-    global sys
     cmds = {}
     for cmd in output:
         if cmd in privescs["su"][sys]:
