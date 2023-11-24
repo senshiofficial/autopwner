@@ -2,11 +2,13 @@ import scrapy
 from scrapy.linkextractors import LinkExtractor
 from scrapy.spiders import CrawlSpider, Rule
 from scrapy.crawler import CrawlerProcess
-from urllib.parse import urlparse
+from urllib.parse import urlparse, parse_qs
 import intro
 
+seen_parameters = set()
+
 def main(args):
-    intro.intro(None,"\n ██▓███   ▄▄▄        ▄████ ▓█████      ██████  ███▄    █  ██▓ ██▓███  ▓█████  ██▀███  \n▓██░  ██▒▒████▄     ██▒ ▀█▒▓█   ▀    ▒██    ▒  ██ ▀█   █ ▓██▒▓██░  ██▒▓█   ▀ ▓██ ▒ ██▒\n▓██░ ██▓▒▒██  ▀█▄  ▒██░▄▄▄░▒███      ░ ▓██▄   ▓██  ▀█ ██▒▒██▒▓██░ ██▓▒▒███   ▓██ ░▄█ ▒\n▒██▄█▓▒ ▒░██▄▄▄▄██ ░▓█  ██▓▒▓█  ▄      ▒   ██▒▓██▒  ▐▌██▒░██░▒██▄█▓▒ ▒▒▓█  ▄ ▒██▀▀█▄  \n▒██▒ ░  ░ ▓█   ▓██▒░▒▓███▀▒░▒████▒   ▒██████▒▒▒██░   ▓██░░██░▒██▒ ░  ░░▒████▒░██▓ ▒██▒\n▒▓▒░ ░  ░ ▒▒   ▓▒█░ ░▒   ▒ ░░ ▒░ ░   ▒ ▒▓▒ ▒ ░░ ▒░   ▒ ▒ ░▓  ▒▓▒░ ░  ░░░ ▒░ ░░ ▒▓ ░▒▓░\n░▒ ░       ▒   ▒▒ ░  ░   ░  ░ ░  ░   ░ ░▒  ░ ░░ ░░   ░ ▒░ ▒ ░░▒ ░      ░ ░  ░  ░▒ ░ ▒░\n░░         ░   ▒   ░ ░   ░    ░      ░  ░  ░     ░   ░ ░  ▒ ░░░          ░     ░░   ░ \n               ░  ░      ░    ░  ░         ░           ░  ░              ░  ░   ░     \n")
+    intro.intro(None, "\n ██▓███   ▄▄▄        ▄████ ▓█████      ██████  ███▄    █  ██▓ ██▓███  ▓█████  ██▀███  \n▓██░  ██▒▒████▄     ██▒ ▀█▒▓█   ▀    ▒██    ▒  ██ ▀█   █ ▓██▒▓██░  ██▒▓█   ▀ ▓██ ▒ ██▒\n▓██░ ██▓▒▒██  ▀█▄  ▒██░▄▄▄░▒███      ░ ▓██▄   ▓██  ▀█ ██▒▒██▒▓██░ ██▓▒▒███   ▓██ ░▄█ ▒\n▒██▄█▓▒ ▒░██▄▄▄▄██ ░▓█  ██▓▒▓█  ▄      ▒   ██▒▓██▒  ▐▌██▒░██░▒██▄█▓▒ ▒▒▓█  ▄ ▒██▀▀█▄  \n▒██▒ ░  ░ ▓█   ▓██▒░▒▓███▀▒░▒████▒   ▒██████▒▒▒██░   ▓██░░██░▒██▒ ░  ░░▒████▒░██▓ ▒██▒\n▒▓▒░ ░  ░ ▒▒   ▓▒█░ ░▒   ▒ ░░ ▒░ ░   ▒ ▒▓▒ ▒ ░░ ▒░   ▒ ▒ ░▓  ▒▓▒░ ░  ░░░ ▒░ ░░ ▒▓ ░▒▓░\n░▒ ░       ▒   ▒▒ ░  ░   ░  ░ ░  ░   ░ ░▒  ░ ░░ ░░   ░ ▒░ ▒ ░░▒ ░      ░ ░  ░  ░▒ ░ ▒░\n░░         ░   ▒   ░ ░   ░    ░      ░  ░  ░     ░   ░ ░  ▒ ░░░          ░     ░░   ░ \n               ░  ░      ░    ░  ░         ░           ░  ░              ░  ░   ░     \n")
     global MySpider
     if args.spider_name:
         MySpider.name = args.spider_name
@@ -18,11 +20,7 @@ def main(args):
 
         MySpider.start_urls = [args.target]
         MySpider.allowed_domains = [urlparse(args.target).netloc]
-    #if args.allowed_domains:
-    #    urls = str(args.allowed_domains).split()
-    #    MySpider.allowed_domains.extend(urls)
-    # Currently Not working
-    
+
     process = CrawlerProcess({
         'LOG_LEVEL': 'ERROR',
     })
@@ -43,8 +41,17 @@ class MySpider(CrawlSpider):
         print(f'\033[35m{response.url}\033[0m')
         parsed_url = urlparse(response.url)
         if parsed_url.query:
-            with open("sql_urls.txt", "a") as f:
-                f.write(response.url+"\n")
+            query_params = parse_qs(parsed_url.query)
+            unique_params = {k: v[0] for k, v in query_params.items() if k not in seen_parameters}
+            seen_parameters.update(unique_params.keys())
+
+            if unique_params:
+                updated_query = "&".join([f"{k}={v}" for k, v in unique_params.items()])
+                cleaned_url = f"{parsed_url.scheme}://{parsed_url.netloc}{parsed_url.path}?{updated_query}"
+                
+                with open("sql_urls.txt", "a") as f:
+                    f.write(cleaned_url + "\n")
+
         yield {
             'url': response.url,
         }
