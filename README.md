@@ -48,7 +48,21 @@ python3 main.py [OPTION]
 	-c, --color           Choose output color (ANSI)
 ```
 
+## Web
+```
+cd web/
+python3 web.py
+```
+or
+```
+sudo cp web/ /srv/http # Arch
+sudo cp web/ /var/www/html # Debian
+```
 ## Versions
+- #### 1.4.2
+	- [+] Web support (Beta)
+	- [+] autoremove duplicate urls 
+	- [+] updated no-args version
 - #### 1.3.2
 	- [+] using Scrapy for p4g3_sn1p3r
 	- [+]  new arguments
@@ -74,3 +88,5 @@ python3 main.py [OPTION]
 - #### Arch Linux x86_64
 	- [-] p0rt_sn1p3r doesnt work due `nmap.nmap.PortScannerError`
 	- [+] anything other works fine
+- #### Mint
+	- [+] everythings working fine
