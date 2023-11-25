@@ -86,7 +86,7 @@ def main(args):
         except Exception as e:
             print(e)
 
-    with open("http/out.json", "w") as f:
+    with open("web/out.json", "w") as f:
         json.dump(data, f, indent=4)
 
     if open_ports:
