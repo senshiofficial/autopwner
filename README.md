@@ -1,3 +1,4 @@
+[![SWUbanner](https://raw.githubusercontent.com/vshymanskyy/StandWithUkraine/main/banner2-direct.svg)](https://github.com/vshymanskyy/StandWithUkraine/blob/main/docs/README.md)
 # autopwner
 
 autopwner is a tool made for automated hacking. Currently you can only use automated Privilege Escalations (for Linux) but i will add more in further versions
